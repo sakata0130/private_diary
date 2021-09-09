@@ -1,5 +1,5 @@
 import logging
-from django.http.response import Http404, HttpResponse
+# from django.http.response import Http404, HttpResponse
 from django.shortcuts import render
 from django.views import generic
 from .forms import InquiryForm
@@ -20,8 +20,8 @@ class InquiryView(generic.FormView):
     form_class = InquiryForm
     success_url = reverse_lazy('diary:inquiry')
 
-    def from_valid(self, form):
+    def form_valid(self, form):
         form.send_email()
         messages.success(self.request, 'メッセージを送信しました。')
-        logger.info('Inquiry sent by {}'.format(format(form.cleaned_data['name'])))
+        logger.info('Inquiry sent by {}'.format(form.cleaned_data['name']))
         return super().form_valid(form)
