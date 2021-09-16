@@ -49,8 +49,9 @@ class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy('diary:diary_list')
 
     def form_valid(self, form):
-        diary = form.sve(commit=False)
-        diary.user = self.request.userdiary.save()
+        diary = form.save(commit=False)
+        diary.user = self.request.user
+        diary.save()
         messages.success(self.request, '日記を作成しました。')
         return super().form_valid(form)
 
